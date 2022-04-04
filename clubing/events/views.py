@@ -45,7 +45,11 @@ def all_event(request):
 
 def all_venue(request):
      venue = Venue.objects.all()
-     return render(request, "events/all_event.html", {"event_list":venue})     
+     return render(request, "events/all_venue.html", {"venue_list":venue})    
+
+def show_venue(request, venue_id):
+     venue = Venue.objects.get(pk=venue_id)
+     return render(request, 'events/show_venue.html', {"venue":venue})      
 
 # Function for First Page of Website
 def home(request, year=datetime.now().year, month=datetime.now().strftime('%B')):

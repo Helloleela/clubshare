@@ -9,6 +9,7 @@ urlpatterns = [
     # Showing All Events And Venues Available in database
     path("event_list", views.all_event, name="event-list"),
     path("venue_list", views.all_venue, name="venue-list"),
+    path("show_venue/<venue_id>", views.show_venue, name="show-venue"),
 
 
     #Adding more venues from website
