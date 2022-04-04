@@ -17,8 +17,8 @@
               Events
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#">Add Events</a></li>
-              <li><a class="dropdown-item" href="#">All Events</a></li>
+              <li><a class="dropdown-item" href="{% url 'add-event'%}">Add Events</a></li>
+              <li><a class="dropdown-item" href="{% url 'event-list' %}">All Events</a></li>
             </ul>
           </li>
 
@@ -27,8 +27,8 @@
               Venues
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#">Add Venue</a></li>
-              <li><a class="dropdown-item" href="#">All Venue</a></li>
+              <li><a class="dropdown-item" href="{%url 'add-venue' %}">Add Venue</a></li>
+              <li><a class="dropdown-item" href="{% url 'venue-list'%}">All Venue</a></li>
             </ul>
           </li>
 
