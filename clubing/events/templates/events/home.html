@@ -1,12 +1,18 @@
-<center>
-<h1>Welcome {{ name }}</h1>
+{% extends 'events/base.html' %}
 
-<h3>Event for {{ month }} {{year}}</h3>
+{% block content %}
 
-{{cal|safe}}
+        <center>
+        <h1>Welcome {{ name }}</h1>
 
-<br><br><br>
+        <h3>Event for {{ month }} {{year}}</h3>
 
-Copyright (c) {{current_year}}
+        {{cal|safe}}
 
-</center>
+        <br><br><br>
+
+        Copyright (c) {{current_year}}
+
+        </center>
+
+{% endblock %}
