@@ -15,4 +15,12 @@ urlpatterns = [
     #Adding more venues from website
     path("add_venue",views.add_venue, name='add-venue'),
     path("add_event", views.add_event, name='add-event'),
+
+    #Searching venue via search bar
+    path("search_venue", views.search_venues, name="search-venue"),
+
+
+    # Updating Venues and Events 
+    path("update_venue/<venue_id>", views.update_venue, name="update-venue"),
+    path("event_venue/<event_id>", views.update_event, name="update-event"),
 ]

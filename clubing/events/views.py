@@ -1,5 +1,5 @@
 from multiprocessing import Event
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 import calendar
 from calendar import HTMLCalendar
 from datetime import datetime
@@ -8,6 +8,24 @@ from .forms import VenueForm, EventForm
 from django.http import HttpResponseRedirect
 
 # Create your views here.
+
+#function for updating and deleting venues and events
+def update_venue(request, venue_id):
+     venue = Venue.objects.get(pk=venue_id)
+     form = VenueForm(request.POST or None, instance=venue)
+     if form.is_valid():
+          form.save()
+          return redirect("venue-list")
+     return render(request, 'events/update_venue.html', {"venue":venue, "form":form}) 
+
+def update_event(request, event_id):
+     event = Event.objects.get(pk=event_id)
+     form = EventForm(request.POST or None, instance=event)
+     if form.is_valid():
+          form.save()
+          return redirect("event-list")
+     return render(request, 'events/update_event.html', {"event":event, "form":form})      
+
 
 #function for adding more venues and events via website
 def add_venue(request):
@@ -28,14 +46,24 @@ def add_event(request):
      submitted  = False
      if request.method == "POST":
           form  = EventForm(request.POST)
-          if form.is_valid():
+          if form.is_valid(): 
                form.save()
                return HttpResponseRedirect('/add_event?submitted=True')
      else:          
           form = EventForm()
           if 'submitted' in request.GET:
                submitted = True
-     return render(request, 'events/add_event.html', {"form":form, "submitted":submitted})     
+     return render(request, 'events/add_event.html', {"form":form, "submitted":submitted})  
+
+# Searching for venues 
+def search_venues(request):
+     if request.method == "POST":
+          searched = request.POST['searched']
+          venues = Venue.objects.filter(name__contains=searched)
+          return render(request, 'events/search_venues.html', {"searched":searched, "venues":venues}) 
+
+     else:
+          return render(request, 'events/search_venues.html', {})        
 
 
 #Showing All Types of Events Registered in Database
