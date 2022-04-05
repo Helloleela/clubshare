@@ -20,7 +20,14 @@ urlpatterns = [
     path("search_venue", views.search_venues, name="search-venue"),
 
 
-    # Updating Venues and Events 
+    # Updating and deleting Venues and Events 
     path("update_venue/<venue_id>", views.update_venue, name="update-venue"),
-    path("event_venue/<event_id>", views.update_event, name="update-event"),
+    path("delete_venue/<venue_id>", views.delete_venue, name="delete-venue"),
+
+    path("update_event/<event_id>", views.update_event, name="update-event"),
+    path("delete_event/<event_id>", views.delete_event, name="delete-event"),
+
+    #Downloading Venue-list in form of text and CSV file
+    path("venue_text", views.venue_text, name="venue-text"),
+    path("venue-csv", views.venue_csv, name="venue-csv"),
 ]

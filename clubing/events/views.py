@@ -5,11 +5,56 @@ from calendar import HTMLCalendar
 from datetime import datetime
 from .models import Event, Venue
 from .forms import VenueForm, EventForm
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
+import csv
 
 # Create your views here.
+#Download list of venue in text or csv file
+def venue_csv(request):
+     response = HttpResponse(content_type='text/csv') 
+     response['Content-Disposition'] = 'attachment; filename=venues.csv'
+
+     writer = csv.writer(response)
+     # Designate The Model
+     venues = Venue.objects.all()
+     writer.writerow(["Venue Name", "Address", "Zip Code", "Phone","Web","Email Address"])
+
+     for venue in venues:
+          writer.writerow([venue.name, venue.address, venue.zip_code, venue.phone, venue.web,venue.email_address])
+
+     
+     return response
+
+
+def venue_text(request):
+     response = HttpResponse(content_type='text/plain') 
+     response['Content-Disposition'] = 'attachment; filename=venues.txt'
+
+     # lines = ["this is line 1 \n",
+     # "this is line 2 \n",
+     # "this is line 3 \n"]
+
+     # Designate The Model
+     venues = Venue.objects.all()
+     lines =[]
+     for venue in venues:
+          lines.append(f'{venue.name}\n{venue.address}\n{venue.zip_code}\n{venue.phone}\n{venue.web}\n{venue.email_address}\n\n\n')
+
+     response.writelines(lines)
+     return response
+   
 
 #function for updating and deleting venues and events
+def delete_venue(request, venue_id):
+     venue=Venue.objects.get(pk=venue_id)
+     venue.delete()
+     return redirect("venue-list")
+
+def delete_event(request, event_id):
+     event=Event.objects.get(pk=event_id)
+     event.delete()
+     return redirect("event-list")     
+
 def update_venue(request, venue_id):
      venue = Venue.objects.get(pk=venue_id)
      form = VenueForm(request.POST or None, instance=venue)
@@ -68,11 +113,11 @@ def search_venues(request):
 
 #Showing All Types of Events Registered in Database
 def all_event(request):
-     event = Event.objects.all()
+     event = Event.objects.all().order_by("-event_date")
      return render(request, "events/all_event.html", {"event_list":event})
 
 def all_venue(request):
-     venue = Venue.objects.all()
+     venue = Venue.objects.all().order_by("name")
      return render(request, "events/all_venue.html", {"venue_list":venue})    
 
 def show_venue(request, venue_id):

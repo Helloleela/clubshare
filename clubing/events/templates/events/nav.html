@@ -37,10 +37,21 @@
               Downloads
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#">Venue Text file</a></li>
-              <li><a class="dropdown-item" href="#">Venue CSV file</a></li>
+              <li><a class="dropdown-item" href="{% url 'venue-text'%}">Venue Text file</a></li>
+              <li><a class="dropdown-item" href="{% url 'venue-csv'%}">Venue CSV file</a></li>
             </ul>
           </li>
+
+          {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="{%url  'logout'%}">logout</a>
+            </li>
+
+          {% else%}
+            <li class="nav-item">
+              <a class="nav-link" href="{%url  'login'%}">login</a>
+            </li>
+          {% endif %}
 
           
         </ul>
