@@ -2,6 +2,7 @@
 
 {% block content %}
 
+
     
         <h3>Event Available </h3>
         <br>
@@ -23,15 +24,19 @@
                   </li>
               </ul>
             </div>
+            {% if user.is_authenticated %}
             <div class="card-footer text-muted">
               <a href="{% url 'update-event' event.id %}" class="btn btn-outline-success">update event</a>
               <a href="{% url 'delete-event' event.id %}" class="btn btn-outline-danger">delete event</a>
             </div>
+            {% endif %}
           </div>
         <br>
 
         <br>
         {% endfor %}
+
+       
    
 
 {% endblock %}
